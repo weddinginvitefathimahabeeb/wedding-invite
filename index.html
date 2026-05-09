@@ -1,30 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#000000">
 
 <style>
+
+/* ✅ CSS RESET & DEVICE VARIABLES */
+:root {
+  --scale-factor: 1;
+  --base-font-size: 16px;
+  --section-height: 100vh;
+}
+
+* {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
 
 /* ✅ NEW ELEGANT FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@500;700&family=Playfair+Display:wght@700;900&display=swap');
 
 /* ✅ BASE */
-body{
-  margin:0;
-  font-family:sans-serif;
-  overflow:hidden;
-  background:black;
-  scroll-behavior:smooth;
+html {
+  width: 100%;
+  height: 100%;
 }
-body.scroll{ overflow-y:auto; }
 
-.section{ height:100vh; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  overflow: hidden;
+  background: black;
+  scroll-behavior: smooth;
+  width: 100%;
+  height: 100%;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body.scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ✅ PREVENT ZOOM ON INPUT FOCUS (mobile) */
+input, select, textarea {
+  font-size: 16px !important;
+}
+
+.section{ height: 100vh; height: 100dvh; min-height: 100vh; }
 
 /* ✅ IMAGE */
 #imageContainer{
   position:fixed;
   width:100%;
   height:100vh;
+  height:100dvh;
   overflow:hidden;
   z-index:1;
 }
@@ -53,15 +89,17 @@ body.scroll{ overflow-y:auto; }
   position:absolute;
   top:40%;
   width:100%;
+  padding:0 20px;
   text-align:center;
   color:white;
   z-index:3;
+  box-sizing:border-box;
 }
 
 /* ✅ TYPING */
 .typing{
   display:inline-block;
-  font-size:26px;
+  font-size: clamp(18px, 5vw, 28px);
   border-right:3px solid white;
   white-space:nowrap;
   overflow:hidden;
@@ -89,6 +127,8 @@ body.scroll{ overflow-y:auto; }
   background:rgba(255,255,255,0.1);
   opacity:0;
   z-index:3;
+  max-width:90%;
+  box-sizing:border-box;
 }
 
 /* ✅ TAGLINE */
@@ -96,18 +136,18 @@ body.scroll{ overflow-y:auto; }
   max-width:340px;
   margin:auto;
   font-family:'Great Vibes', cursive;
-  font-size:38px;
+  font-size: clamp(28px, 8vw, 42px);
   font-weight:800;
   letter-spacing:1px;
   color:#ffd700;
   text-shadow:0 0 16px rgba(255,215,0,0.6);
-  white-space:nowrap;
+  white-space: normal;
 }
 
 /* ✅ NAMES */
 .names{
   font-family:'Playfair Display', serif;
-  font-size:38px;
+  font-size: clamp(28px, 7vw, 42px);
   font-weight:900;
   letter-spacing:0.15em;
   color:white;
@@ -136,8 +176,8 @@ body.scroll{ overflow-y:auto; }
   top:62%;
   left:50%;
   transform:translateX(-50%);
-  width:130px;
-  height:130px;
+  width: clamp(100px, 25vw, 140px);
+  height: clamp(100px, 25vw, 140px);
   border-radius:50%;
   border:none;
   background:radial-gradient(circle,#ffd700,#b8962e);
@@ -149,6 +189,8 @@ body.scroll{ overflow-y:auto; }
   z-index:4;
   opacity:0;
   box-shadow:0 0 25px rgba(255,215,0,0.6);
+  font-size: clamp(12px, 3vw, 16px);
+  font-weight: 700;
 }
 .showBtn{
   animation:fadeBtn 1s forwards,pulse 1.6s infinite;
@@ -267,7 +309,8 @@ body.scroll{ overflow-y:auto; }
 
 /* 💖 STORY (ENHANCED) */
 #story{
-  height:100vh;
+  min-height:100vh;
+  min-height:100dvh;
   background:linear-gradient(to bottom,#ffb6c1,#ff69b4,#ff1493);
   color:white;
   display:flex;
@@ -277,6 +320,8 @@ body.scroll{ overflow-y:auto; }
   position:relative;
   z-index:2;
   overflow:hidden;
+  padding:40px 20px;
+  box-sizing:border-box;
 }
 
 #story::before{
@@ -292,7 +337,7 @@ body.scroll{ overflow-y:auto; }
   position:relative;
   z-index:1;
   max-width:600px;
-  padding:25px;
+  padding: clamp(20px, 5vw, 35px);
   line-height:1.8;
   border-radius:22px;
   background:rgba(255,255,255,0.18);
@@ -304,7 +349,7 @@ body.scroll{ overflow-y:auto; }
 /* ✨ NEW STYLES */
 .storyTitle{
   font-family:'Great Vibes', cursive;
-  font-size:38px;
+  font-size: clamp(28px, 8vw, 42px);
   text-shadow:0 0 15px rgba(255,255,255,0.6);
 }
 
@@ -390,7 +435,8 @@ body.scroll{ overflow-y:auto; }
 /* 🕌 TIMELINE */
 #timeline{
   min-height:100vh;
-  padding:60px 20px;
+  min-height:100dvh;
+  padding: clamp(40px, 8vh, 80px) 20px;
   background:linear-gradient(180deg,#150b1b,#120810 60%,#0f0813);
   color:white;
   display:flex;
@@ -399,22 +445,24 @@ body.scroll{ overflow-y:auto; }
   text-align:center;
   position:relative;
   z-index:20;
+  box-sizing:border-box;
 }
 
 .timelineBox{
   width:min(720px,100%);
-  padding:36px 32px;
+  padding: clamp(24px, 5vw, 40px);
   border-radius:32px;
   background:rgba(255,255,255,0.12);
   border:1px solid rgba(255,215,0,0.2);
   backdrop-filter:blur(16px);
   box-shadow:0 24px 80px rgba(0,0,0,0.35);
   position:relative;
+  box-sizing:border-box;
 }
 
 .timelineTitle{
   font-family:'Great Vibes', cursive;
-  font-size:44px;
+  font-size: clamp(32px, 8vw, 48px);
   margin-bottom:24px;
   color:#ffdf9a;
   text-shadow:0 0 20px rgba(255,215,0,0.55);
@@ -422,7 +470,7 @@ body.scroll{ overflow-y:auto; }
 
 .timelineList{
   position:relative;
-  padding-left:40px;
+  padding-left: clamp(20px, 4vw, 40px);
 }
 
 .timelineList::before{
@@ -438,7 +486,7 @@ body.scroll{ overflow-y:auto; }
 .timeline-item{
   position:relative;
   margin-bottom:30px;
-  padding:18px 24px 18px 38px;
+  padding: clamp(12px, 2vw, 20px) clamp(18px, 3vw, 28px) clamp(12px, 2vw, 20px) clamp(28px, 5vw, 40px);
   border-radius:22px;
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.12);
@@ -464,14 +512,14 @@ body.scroll{ overflow-y:auto; }
 
 .timeline-time{
   font-family:'Cormorant Garamond', serif;
-  font-size:18px;
+  font-size: clamp(13px, 2.5vw, 20px);
   margin-bottom:8px;
   color:#ffd700;
   letter-spacing:0.08em;
 }
 
 .timeline-label{
-  font-size:24px;
+  font-size: clamp(18px, 4vw, 28px);
   margin:0;
   color:#fff;
 }
@@ -480,6 +528,7 @@ body.scroll{ overflow-y:auto; }
   margin:10px 0 0;
   color:rgba(255,255,255,0.85);
   line-height:1.7;
+  font-size: clamp(13px, 2vw, 18px);
 }
 
 .venue{
@@ -488,34 +537,38 @@ body.scroll{ overflow-y:auto; }
   border-radius:22px;
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.12);
+  box-sizing:border-box;
 }
 
 .venue h3{
-  font-size:26px;
+  font-size: clamp(18px, 4vw, 28px);
   margin-bottom:10px;
 }
 
 .venue p{
   margin:0;
   color:rgba(255,255,255,0.88);
+  font-size: clamp(14px, 2vw, 18px);
 }
 
 .venue a{
   display:inline-block;
   margin-top:14px;
-  padding:12px 18px;
+  padding: clamp(10px, 2vw, 14px) clamp(14px, 3vw, 22px);
   background:linear-gradient(135deg,#ffd700,#ffe680);
   color:#120800;
   text-decoration:none;
   border-radius:999px;
   font-weight:700;
   box-shadow:0 12px 25px rgba(255,215,0,0.25);
+  font-size: clamp(13px, 2vw, 16px);
 }
 
 /* ⏰ COUNTDOWN */
 #countdown{
-  height:100vh;
-  padding:60px 20px;
+  min-height:100vh;
+  min-height:100dvh;
+  padding: clamp(40px, 8vh, 80px) 20px;
   background:linear-gradient(180deg,#0f0813,#120810 40%,#150b1b);
   color:white;
   display:flex;
@@ -524,21 +577,23 @@ body.scroll{ overflow-y:auto; }
   text-align:center;
   position:relative;
   z-index:20;
+  box-sizing:border-box;
 }
 
 .countdownBox{
   max-width:700px;
-  padding:40px 32px;
+  padding: clamp(28px, 5vw, 48px);
   border-radius:32px;
   background:rgba(255,255,255,0.12);
   border:1px solid rgba(255,215,0,0.2);
   backdrop-filter:blur(16px);
   box-shadow:0 24px 80px rgba(0,0,0,0.35);
+  box-sizing:border-box;
 }
 
 .countdownTitle{
   font-family:'Great Vibes', cursive;
-  font-size:46px;
+  font-size: clamp(32px, 8vw, 52px);
   margin-bottom:24px;
   color:#ffdf9a;
   text-shadow:0 0 20px rgba(255,215,0,0.55);
@@ -546,7 +601,7 @@ body.scroll{ overflow-y:auto; }
 
 .countdownSubtitle{
   font-family:'Cormorant Garamond', serif;
-  font-size:18px;
+  font-size: clamp(14px, 2.5vw, 20px);
   margin-bottom:32px;
   color:rgba(255,255,255,0.85);
   letter-spacing:0.08em;
@@ -555,24 +610,25 @@ body.scroll{ overflow-y:auto; }
 .countdownDisplay{
   display:flex;
   justify-content:center;
-  gap:20px;
+  gap: clamp(10px, 2vw, 20px);
   margin-bottom:24px;
+  flex-wrap:wrap;
 }
 
 .countdownItem{
   display:flex;
   flex-direction:column;
   align-items:center;
-  padding:16px;
+  padding: clamp(10px, 2vw, 16px);
   border-radius:16px;
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.12);
-  min-width:80px;
+  min-width: clamp(60px, 18vw, 90px);
 }
 
 .countdownNumber{
   font-family:'Playfair Display', serif;
-  font-size:36px;
+  font-size: clamp(24px, 6vw, 42px);
   font-weight:900;
   color:#ffd700;
   text-shadow:0 0 16px rgba(255,215,0,0.6);
@@ -580,7 +636,7 @@ body.scroll{ overflow-y:auto; }
 
 .countdownLabel{
   font-family:'Cormorant Garamond', serif;
-  font-size:14px;
+  font-size: clamp(11px, 1.5vw, 16px);
   color:rgba(255,255,255,0.75);
   margin-top:8px;
   letter-spacing:0.05em;
@@ -589,70 +645,92 @@ body.scroll{ overflow-y:auto; }
 
 .countdownMessage{
   font-family:'Cormorant Garamond', serif;
-  font-size:20px;
+  font-size: clamp(16px, 3vw, 24px);
   color:#ffefd5;
   text-shadow:0 0 14px rgba(255,215,0,0.4);
   line-height:1.6;
 }
 
 /* 📱 MOBILE RESPONSIVE */
-@media (max-width: 768px) {
-  .timelineList {
-    padding-left: 20px;
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
   }
 
-  .timeline-item {
-    padding: 14px 18px 14px 28px;
+  #coupleName {
+    top: 35%;
+    padding: 15px;
+  }
+
+  #btn {
+    top: 60%;
+  }
+
+  #text {
+    top: 35%;
+  }
+
+  .timelineList::before {
+    left: 15px;
   }
 
   .timeline-item::before {
-    left: -4px;
-    width: 10px;
-    height: 10px;
+    left: -8px;
+  }
+}
+
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
   }
 
   .countdownDisplay {
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
+    gap: 8px;
   }
 
   .countdownItem {
-    min-width: 60px;
-    padding: 12px;
+    min-width: 55px;
+  }
+}
+
+/* TABLET RESPONSIVE */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .section {
+    height: 100vh;
+  }
+}
+
+/* PREVENT ZOOM ON INPUT FOCUS - iOS SPECIFIC */
+@supports (-webkit-touch-callout: none) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* NOTCH SUPPORT */
+@supports (padding: max(0px)) {
+  body.scroll {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
   }
 
-  .countdownNumber {
-    font-size: 28px;
-  }
-
-  .countdownLabel {
-    font-size: 12px;
-  }
-
-  .countdownTitle {
-    font-size: 36px;
-  }
-
-  .timelineTitle {
-    font-size: 36px;
-  }
-
-  .storyTitle {
-    font-size: 32px;
+  .modal-content {
+    padding-left: max(clamp(24px, 5vw, 40px), env(safe-area-inset-left));
+    padding-right: max(clamp(24px, 5vw, 40px), env(safe-area-inset-right));
   }
 }
 
 /* RSVP MODAL */
 .rsvp-button {
   margin-top: 24px;
-  padding: 14px 28px;
+  padding: clamp(10px, 2vw, 16px) clamp(20px, 4vw, 32px);
   background: linear-gradient(135deg, #ffd700, #ffe680);
   color: #120800;
   border: none;
   border-radius: 999px;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
+  font-size: clamp(14px, 2.5vw, 20px);
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 12px 25px rgba(255, 215, 0, 0.25);
@@ -674,41 +752,26 @@ body.scroll{ overflow-y:auto; }
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(8px);
+  box-sizing: border-box;
 }
 
 .modal-content {
   background: rgba(255, 255, 255, 0.95);
-  margin: 10% auto;
-  padding: 30px;
+  margin: clamp(20%, 10vh, 10%);
+  padding: clamp(24px, 5vw, 40px);
   border-radius: 24px;
   width: min(400px, 90%);
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   position: relative;
   animation: modalFadeIn 0.3s ease;
-}
-
-@keyframes modalFadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.close {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  color: #aaa;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover {
-  color: #000;
+  box-sizing: border-box;
 }
 
 .modal-title {
   font-family: 'Great Vibes', cursive;
-  font-size: 32px;
+  font-size: clamp(24px, 5vw, 36px);
   color: #333;
   margin-bottom: 8px;
   text-align: center;
@@ -716,7 +779,7 @@ body.scroll{ overflow-y:auto; }
 
 .modal-subtitle {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 16px;
+  font-size: clamp(13px, 2.5vw, 18px);
   color: #666;
   text-align: center;
   margin-bottom: 24px;
@@ -729,7 +792,7 @@ body.scroll{ overflow-y:auto; }
 .form-group label {
   display: block;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 16px;
+  font-size: clamp(14px, 2vw, 18px);
   color: #333;
   margin-bottom: 6px;
 }
@@ -737,7 +800,7 @@ body.scroll{ overflow-y:auto; }
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 12px;
+  padding: clamp(10px, 2vw, 14px);
   border: 2px solid #ddd;
   border-radius: 8px;
   font-family: 'Cormorant Garamond', serif;
@@ -753,13 +816,13 @@ body.scroll{ overflow-y:auto; }
 
 .submit-btn {
   width: 100%;
-  padding: 14px;
+  padding: clamp(12px, 2vw, 18px);
   background: linear-gradient(135deg, #ffd700, #ffe680);
   color: #120800;
   border: none;
   border-radius: 999px;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
+  font-size: clamp(14px, 2.5vw, 20px);
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(255, 215, 0, 0.25);
@@ -768,6 +831,26 @@ body.scroll{ overflow-y:auto; }
 
 .submit-btn:hover {
   transform: translateY(-2px);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.close:hover {
+  color: #000;
 }
 
 /* PETALS */
@@ -873,21 +956,21 @@ body.scroll{ overflow-y:auto; }
   <div class="timelineBox">
     <h2 class="timelineTitle">Wedding Vows ✨</h2>
 
+          <div class="timeline-item">
+        <div class="timeline-time">1:30 PM</div>
+        <h3 class="timeline-label">Lunch 🍽</h3>
+        <p class="timeline-desc">A warm feast with family and friends, celebrating love, laughter, and togetherness.</p>
+      </div>
+
     <div class="timelineList">
       <div class="timeline-item">
-        <div class="timeline-time">10:30 AM</div>
+        <div class="timeline-time">03:30 PM</div>
         <h3 class="timeline-label">Nikkah 💍</h3>
         <p class="timeline-desc">A sacred union ceremony where we exchange vows and begin this beautiful journey together.</p>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-time">1:00 PM</div>
-        <h3 class="timeline-label">Lunch 🍽</h3>
-        <p class="timeline-desc">A warm feast with family and friends, celebrating love, laughter, and togetherness.</p>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-time">7:00 PM</div>
+        <div class="timeline-time">04:00 PM</div>
         <h3 class="timeline-label">Walima 🌸</h3>
         <p class="timeline-desc">An elegant evening reception filled with blessings, music, and joyful memories.</p>
       </div>
@@ -971,7 +1054,95 @@ body.scroll{ overflow-y:auto; }
 
 <script>
 
-/* SAME JS - UNCHANGED */
+/* ✅ DEVICE DETECTION & OPTIMIZATION */
+function initializeDeviceOptimization() {
+  // Detect device type
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const isTablet = /iPad|Android(?!.*Mobile)/i.test(navigator.userAgent);
+  const devicePixelRatio = window.devicePixelRatio || 1;
+
+  // Set CSS variables for responsive behavior
+  const setScaleFactor = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+    let scaleFactor = 1;
+    if (vw < 480) scaleFactor = 0.9;
+    else if (vw < 768) scaleFactor = 0.95;
+
+    document.documentElement.style.setProperty('--scale-factor', scaleFactor);
+    document.documentElement.style.setProperty('--base-font-size', '16px');
+    document.documentElement.style.setProperty('--section-height', window.innerHeight + 'px');
+  };
+
+  // Fix viewport height issues on mobile
+  const fixViewportHeight = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', vh + 'px');
+    
+    // Update section heights for better mobile support
+    const sections = document.querySelectorAll('.section, #story, #timeline, #countdown');
+    sections.forEach(section => {
+      section.style.minHeight = window.innerHeight + 'px';
+    });
+  };
+
+  // Prevent layout shift on scroll
+  const preventLayoutShift = () => {
+    if (isMobile) {
+      document.body.style.overflowX = 'hidden';
+      document.body.style.width = '100vw';
+    }
+  };
+
+  // Initialize on load
+  setScaleFactor();
+  fixViewportHeight();
+  preventLayoutShift();
+
+  // Re-initialize on resize and orientation change
+  window.addEventListener('resize', () => {
+    setScaleFactor();
+    fixViewportHeight();
+  });
+
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      fixViewportHeight();
+      setScaleFactor();
+    }, 100);
+  });
+
+  // Prevent iOS zoom on input focus
+  if (isMobile) {
+    const inputs = document.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        this.style.fontSize = '16px';
+      });
+    });
+  }
+
+  // Log device info for debugging (optional)
+  console.log({
+    isMobile,
+    isTablet,
+    devicePixelRatio,
+    viewportWidth: window.innerWidth,
+    viewportHeight: window.innerHeight
+  });
+}
+
+// Initialize on page load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeDeviceOptimization);
+} else {
+  initializeDeviceOptimization();
+}
+
+/* ✅ SAME JS - UNCHANGED */
 const btn=document.getElementById("btn");
 const img=document.getElementById("bgImg");
 const petals=document.getElementById("petalContainer");
