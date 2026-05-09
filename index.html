@@ -219,27 +219,8 @@ input, select, textarea {
   transition:opacity 1.8s ease 0.2s;
 }
 
-#door::after{
-  content:'';
-  position:absolute;
-  left:50%;
-  top:32%;
-  width:2px;
-  height:120%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0) 45%);
-  transform:translateX(-50%) rotate(10deg) scaleX(0);
-  opacity:0;
-  transition:transform 1.2s ease, opacity 1.2s ease;
-  pointer-events:none;
-}
-
 #door.open::before{
   opacity:1;
-}
-
-#door.open::after{
-  opacity:1;
-  transform:translateX(-50%) rotate(10deg) scaleX(1);
 }
 
 .side{
@@ -343,7 +324,16 @@ input, select, textarea {
   background:rgba(255,255,255,0.18);
   backdrop-filter:blur(14px);
   box-shadow:0 0 40px rgba(255,105,180,0.6);
-  animation:fadeRomantic 2s ease;
+  animation:fadeRomantic 2s ease, subtleGlow 3s ease-in-out infinite;
+}
+
+@keyframes subtleGlow {
+  0%, 100% {
+    box-shadow: 0 0 40px rgba(255,105,180,0.6);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(255,105,180,0.8), 0 0 80px rgba(255,131,191,0.4);
+  }
 }
 
 /* ✨ NEW STYLES */
@@ -351,22 +341,102 @@ input, select, textarea {
   font-family:'Great Vibes', cursive;
   font-size: clamp(28px, 8vw, 42px);
   text-shadow:0 0 15px rgba(255,255,255,0.6);
+  animation: slideInDown 1s ease forwards;
 }
 
 .glow{
   font-weight:bold;
   text-shadow:0 0 10px #ff69b4,0 0 20px #ff1493;
+  animation: glowPulse 2.5s ease-in-out infinite;
+  display: inline-block;
 }
 
 .specialGlow{
   color:#fff;
   font-weight:900;
   text-shadow:0 0 14px rgba(255,255,255,0.9),0 0 30px rgba(255,131,191,0.6);
+  animation: specialPulse 2s ease-in-out infinite;
+  display: inline-block;
 }
 
 .bigGlow{
   font-size:26px;
   text-shadow:0 0 15px #ff69b4,0 0 30px #ff1493;
+  animation: bounce 2.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+.storyBox p {
+  animation: slideInUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+.storyBox p:nth-of-type(1) { animation-delay: 0.3s; }
+.storyBox p:nth-of-type(2) { animation-delay: 0.5s; }
+.storyBox p:nth-of-type(3) { animation-delay: 0.7s; }
+.storyBox p:nth-of-type(4) { animation-delay: 0.9s; }
+.storyBox p:nth-of-type(5) { animation-delay: 1.1s; }
+.storyBox p:nth-of-type(6) { animation-delay: 1.3s; }
+.storyBox p:nth-of-type(7) { animation-delay: 1.5s; }
+.storyBox p:nth-of-type(8) { animation-delay: 1.7s; }
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 60px rgba(255,105,180,0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes specialPulse {
+  0%, 100% {
+    text-shadow: 0 0 14px rgba(255,255,255,0.9), 0 0 30px rgba(255,131,191,0.6);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 25px rgba(255,255,255,0.95), 0 0 50px rgba(255,131,191,0.8), 0 0 80px rgba(255,105,180,0.5);
+    transform: scale(1.08);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  25% {
+    transform: translateY(-8px) scale(1.05);
+  }
+  50% {
+    transform: translateY(0) scale(1);
+  }
+  75% {
+    transform: translateY(-4px) scale(1.02);
+  }
 }
 
 .tiny-hearts{
@@ -384,17 +454,29 @@ input, select, textarea {
   color:#ffbfd7;
   font-size:18px;
   opacity:0;
-  animation:floatTiny 2.2s ease-in-out infinite;
+  animation:floatTiny 2.2s ease-in-out infinite, heartBeat 1.5s ease-in-out infinite;
 }
 
 .tiny-hearts span:nth-child(2){
-  animation-delay:0.3s;
+  animation-delay:0.3s, 0.3s;
   color:#ff87c0;
 }
 
 .tiny-hearts span:nth-child(3){
-  animation-delay:0.6s;
+  animation-delay:0.6s, 0.6s;
   color:#ffd7e9;
+}
+
+@keyframes heartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.3);
+  }
+  28% {
+    transform: scale(1);
+  }
 }
 
 @keyframes floatTiny{
@@ -421,15 +503,27 @@ input, select, textarea {
   content:"💖 💕 💗 💓 💞";
   position:absolute;
   width:100%;
-  animation:floatHearts 12s linear infinite;
+  animation:floatHearts 12s linear infinite, sway 4s ease-in-out infinite;
   opacity:0.6;
 }
-.hearts::after{animation-delay:6s;}
+.hearts::after{animation-delay:6s, 2s;}
 
 @keyframes floatHearts{
   from{transform:translateY(100%);opacity:0;}
   20%{opacity:0.6;}
   to{transform:translateY(-120%);opacity:0;}
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(20px);
+  }
+  75% {
+    transform: translateX(-20px);
+  }
 }
 
 /* 🕌 TIMELINE */
@@ -826,11 +920,16 @@ input, select, textarea {
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(255, 215, 0, 0.25);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
-.submit-btn:hover {
+.submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 @keyframes modalFadeIn {
@@ -1172,15 +1271,15 @@ function openDoor(){
 
   setTimeout(()=>{
     document.getElementById("story").scrollIntoView({behavior:"smooth"});
-  },2200);
+  },4200);
 
   setTimeout(()=>{
     document.getElementById("timeline").scrollIntoView({behavior:"smooth"});
-  },6500);
+  },8500);
 
   setTimeout(()=>{
     document.getElementById("countdown").scrollIntoView({behavior:"smooth"});
-  },10800);
+  },12800);
 }
 
 function startDoorSparkles(){
@@ -1222,7 +1321,7 @@ function launchPopper(){
 
 /* ⏰ COUNTDOWN FUNCTION */
 function updateCountdown(){
-  const targetDate = new Date('2026-05-24T00:00:00').getTime();
+  const targetDate = new Date('2026-05-24T15:30:00').getTime();
   const now = new Date().getTime();
   const difference = targetDate - now;
 
@@ -1269,6 +1368,14 @@ window.onclick = function(event) {
 
 rsvpForm.onsubmit = async function(e) {
   e.preventDefault();
+  
+  const submitBtn = document.querySelector('.submit-btn');
+  const originalText = submitBtn.textContent;
+  
+  // Disable button and show loading state
+  submitBtn.disabled = true;
+  submitBtn.textContent = '⏳ Submitting...';
+  
   const name = document.getElementById('guestName').value;
   const guests = document.getElementById('guestCount').value;
 
@@ -1279,13 +1386,22 @@ rsvpForm.onsubmit = async function(e) {
     });
 
     if (response.ok) {
-      alert(`Thank you, ${name}! Your RSVP for ${guests} guest(s) has been received. We can't wait to celebrate with you! 💍`);
-      modal.style.display = 'none';
-      rsvpForm.reset();
+      submitBtn.textContent = '✅ Submitted!';
+      setTimeout(() => {
+        alert(`Thank you, ${name}! Your RSVP for ${guests} guest(s) has been received. We can't wait to celebrate with you! 💍`);
+        modal.style.display = 'none';
+        rsvpForm.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }, 500);
     } else {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
       alert('Sorry, there was an error submitting your RSVP. Please try again.');
     }
   } catch (error) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
     alert('Sorry, there was an error submitting your RSVP. Please try again.');
     console.error('RSVP submission error:', error);
   }
