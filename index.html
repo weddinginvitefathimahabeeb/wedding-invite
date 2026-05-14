@@ -1876,6 +1876,11 @@ function initializeDeviceOptimization() {
     });
   }
 
+  // Disable browser scroll restoration so reload starts at the top
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
   // Log device info for debugging (optional)
   console.log({
     isMobile,
@@ -2005,10 +2010,22 @@ function resetPageState() {
   // Reset couple name
   const coupleName = document.getElementById("coupleName");
   if (coupleName) coupleName.classList.remove("showNames");
-  
+
+  // Remove any floating symbols leftover from a cached load
+  const loveSymbolContainer = document.getElementById('loveSymbols');
+  if (loveSymbolContainer) loveSymbolContainer.innerHTML = '';
+
+  // Clear any spawned particles, sparkles, or petals
+  document.querySelectorAll('.doorSparkle, .particle').forEach(el => el.remove());
+  const petalContainer = document.getElementById('petalContainer');
+  if (petalContainer) petalContainer.innerHTML = '';
+
   // Reset story paragraphs
   const storyParagraphs = document.querySelectorAll('.storyBox p');
   storyParagraphs.forEach(p => p.classList.remove('typing-active'));
+
+  const scrollHint = document.getElementById('scrollHint');
+  if (scrollHint) scrollHint.classList.remove('show');
 }
 
 // Initialize on page load
@@ -2025,6 +2042,17 @@ if (document.readyState === 'loading') {
   //createFloatingSymbols();
   initializeStoryTyping();
 }
+
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    resetPageState();
+    window.scrollTo(0, 0);
+  }
+});
+
+window.addEventListener('beforeunload', () => {
+  window.scrollTo(0, 0);
+});
 
 /* ✅ SAME JS - UNCHANGED */
 const btn=document.getElementById("btn");
