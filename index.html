@@ -2064,8 +2064,9 @@ function openDoor(){
   launchPopper();
 
   setTimeout(()=>{
-    document.getElementById("story").scrollIntoView({behavior:"smooth"});
-  },4200);
+    const storySection = document.getElementById("story");
+    storySection.scrollIntoView({behavior:"smooth", block:"start"});
+  },4500);
 }
 
 function startDoorSparkles(){
