@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#000000">
+<link rel="preload" as="image" href="images/FandH.webp" type="image/webp">
 
 <style>
 
@@ -19,6 +20,7 @@
 * {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 /* ✅ NEW ELEGANT FONTS */
@@ -28,6 +30,12 @@
 html {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 body {
@@ -38,7 +46,8 @@ body {
   background: black;
   scroll-behavior: smooth;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  height: 100dvh;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -53,11 +62,22 @@ input, select, textarea {
   font-size: 16px !important;
 }
 
-.section{ height: 100vh; height: 100dvh; min-height: 100vh; }
+.section{ 
+  height: 100vh; 
+  height: 100dvh; 
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden;
+  position: relative;
+}
 
 /* ✅ IMAGE */
 #imageContainer{
   position:fixed;
+  top: 0;
+  left: 0;
   width:100%;
   height:100vh;
   height:100dvh;
@@ -201,8 +221,11 @@ input, select, textarea {
 /* ✅ DOOR */
 #door{
   position:fixed;
+  top: 0;
+  left: 0;
   width:100%;
-  height:100%;
+  height:100vh;
+  height:100dvh;
   display:flex;
   perspective:1800px;
   z-index:2;
@@ -1063,6 +1086,7 @@ input, select, textarea {
 /* ROMANTIC QUOTE OVERLAY */
 .quoteOverlay {
   position: absolute;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
@@ -1072,6 +1096,10 @@ input, select, textarea {
   transition: all 0.3s ease;
   pointer-events: none;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 20px;
 }
 
 .quoteOverlay.show {
@@ -1105,7 +1133,7 @@ input, select, textarea {
 }
 
 .additionalGallery.show {
-  max-height: 3000px;
+  max-height: none;
   opacity: 1;
 }
 
@@ -1618,7 +1646,7 @@ input, select, textarea {
 <div class="section">
 
 <div id="imageContainer">
-  <img id="bgImg" src="images/FandH.webp">
+  <img id="bgImg" src="images/FandH.webp" loading="eager" decoding="async" fetchpriority="high">
 </div>
 
 <!-- ✨ FLOATING LOVE SYMBOLS -->
@@ -1940,14 +1968,21 @@ function initializeStoryTyping() {
           // Re-enable scroll when Forever appears
           document.body.style.overflow = 'auto';
           
-          // Hide hint when user manually scrolls
-          const scrollListener = () => {
-            if (scrollHint) {
+          // Hide hint on manual scroll - simple and immediate
+          const hideScrollHint = (e) => {
+            if (scrollHint && scrollHint.classList.contains('show')) {
               scrollHint.classList.remove('show');
+              // Remove listener after first scroll
+              document.removeEventListener('wheel', hideScrollHint);
+              document.removeEventListener('touchmove', hideScrollHint);
+              window.removeEventListener('scroll', hideScrollHint);
             }
-            document.removeEventListener('scroll', scrollListener);
           };
-          document.addEventListener('scroll', scrollListener);
+          
+          // Listen for all scroll types
+          document.addEventListener('wheel', hideScrollHint, false);
+          document.addEventListener('touchmove', hideScrollHint, false);
+          window.addEventListener('scroll', hideScrollHint, false);
         }, 18500);
         
         // Stop observing once animation starts
@@ -1962,11 +1997,39 @@ function initializeStoryTyping() {
 // Initialize on page load
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
+    // Reset scroll position and state on load
+    window.scrollTo(0, 0);
+    document.body.classList.remove('scroll');
+    const door = document.getElementById("door");
+    if (door) door.classList.remove("open");
+    const img = document.getElementById("bgImg");
+    if (img) img.classList.remove("clear");
+    const text = document.getElementById("text");
+    if (text) text.style.display = "";
+    const btn = document.getElementById("btn");
+    if (btn) btn.style.display = "";
+    const coupleName = document.getElementById("coupleName");
+    if (coupleName) coupleName.classList.remove("showNames");
+    
     initializeDeviceOptimization();
     createFloatingSymbols();
     initializeStoryTyping();
   });
 } else {
+  // Reset scroll position and state on load
+  window.scrollTo(0, 0);
+  document.body.classList.remove('scroll');
+  const door = document.getElementById("door");
+  if (door) door.classList.remove("open");
+  const img = document.getElementById("bgImg");
+  if (img) img.classList.remove("clear");
+  const text = document.getElementById("text");
+  if (text) text.style.display = "";
+  const btn = document.getElementById("btn");
+  if (btn) btn.style.display = "";
+  const coupleName = document.getElementById("coupleName");
+  if (coupleName) coupleName.classList.remove("showNames");
+  
   initializeDeviceOptimization();
   createFloatingSymbols();
   initializeStoryTyping();
@@ -2187,13 +2250,13 @@ function initializeGallery() {
       
       const img = document.createElement('img');
       img.src = `images/${i}.webp`;
-    //  img.alt = `Memory ${i}`;
+      img.alt = `Memory ${i}`;
       
       const overlay = document.createElement('div');
       overlay.className = 'featuredOverlay';
       const caption = document.createElement('span');
       caption.className = 'featuredCaption';
-      caption.textContent = `Memory ${i} 💕`;
+      caption.textContent = ``;
       overlay.appendChild(caption);
       
       featuredItem.appendChild(img);
@@ -2218,7 +2281,7 @@ function initializeGallery() {
       overlay.className = 'galleryOverlay';
       const caption = document.createElement('span');
       caption.className = 'galleryCaption';
-      caption.textContent = `Memory ${i} 💕`;
+      caption.textContent = ``;
       overlay.appendChild(caption);
       
       galleryItem.appendChild(img);
