@@ -1988,42 +1988,55 @@ function initializeStoryTyping() {
   observer.observe(storySection);
 }
 
+// Reset all page state on load
+function resetPageState() {
+  // Reset scroll position
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  
+  // Reset overflow and scroll class
+  document.body.style.overflow = 'hidden';
+  document.body.classList.remove('scroll');
+  
+  // Reset door
+  const door = document.getElementById("door");
+  if (door) door.classList.remove("open");
+  
+  // Reset image
+  const img = document.getElementById("bgImg");
+  if (img) img.classList.remove("clear");
+  
+  // Reset text
+  const text = document.getElementById("text");
+  if (text) text.style.display = "";
+  
+  // Reset button
+  const btn = document.getElementById("btn");
+  if (btn) {
+    btn.style.display = "";
+    btn.classList.remove('showBtn');
+  }
+  
+  // Reset couple name
+  const coupleName = document.getElementById("coupleName");
+  if (coupleName) coupleName.classList.remove("showNames");
+  
+  // Reset story paragraphs
+  const storyParagraphs = document.querySelectorAll('.storyBox p');
+  storyParagraphs.forEach(p => p.classList.remove('typing-active'));
+}
+
 // Initialize on page load
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    // Reset scroll position and state on load
-    window.scrollTo(0, 0);
-    document.body.classList.remove('scroll');
-    const door = document.getElementById("door");
-    if (door) door.classList.remove("open");
-    const img = document.getElementById("bgImg");
-    if (img) img.classList.remove("clear");
-    const text = document.getElementById("text");
-    if (text) text.style.display = "";
-    const btn = document.getElementById("btn");
-    if (btn) btn.style.display = "";
-    const coupleName = document.getElementById("coupleName");
-    if (coupleName) coupleName.classList.remove("showNames");
-    
+    resetPageState();
     initializeDeviceOptimization();
     createFloatingSymbols();
     initializeStoryTyping();
   });
 } else {
-  // Reset scroll position and state on load
-  window.scrollTo(0, 0);
-  document.body.classList.remove('scroll');
-  const door = document.getElementById("door");
-  if (door) door.classList.remove("open");
-  const img = document.getElementById("bgImg");
-  if (img) img.classList.remove("clear");
-  const text = document.getElementById("text");
-  if (text) text.style.display = "";
-  const btn = document.getElementById("btn");
-  if (btn) btn.style.display = "";
-  const coupleName = document.getElementById("coupleName");
-  if (coupleName) coupleName.classList.remove("showNames");
-  
+  resetPageState();
   initializeDeviceOptimization();
   createFloatingSymbols();
   initializeStoryTyping();
