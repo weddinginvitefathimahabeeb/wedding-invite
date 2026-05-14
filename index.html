@@ -1959,6 +1959,7 @@ function initializeStoryTyping() {
             scrollHint.classList.add('show');
           }
           // Re-enable scroll when Forever appears
+          document.body.classList.add('scroll');
           document.body.style.overflow = 'auto';
           
           // Hide hint on manual scroll - simple and immediate
@@ -2045,7 +2046,9 @@ function openDoor(){
   const door = document.getElementById("door");
   door.classList.add("open");
   img.classList.add("clear");
-  document.body.classList.add("scroll");
+  
+  // Lock scroll on page 1 - only auto-scroll allowed
+  document.body.style.overflow = 'hidden';
 
   document.getElementById("text").style.display="none";
   btn.style.display="none";
