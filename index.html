@@ -236,7 +236,7 @@ input, select, textarea {
 
 .side{
   width:50%;
-  height:100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background: linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 45%);
   border-left:1px solid rgba(255,255,255,0.08);
   border-right:1px solid rgba(255,255,255,0.08);
@@ -1413,7 +1413,7 @@ input, select, textarea {
 /* TABLET RESPONSIVE */
 @media (min-width: 768px) and (max-width: 1024px) {
   .section {
-    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
   }
 }
 
@@ -1822,13 +1822,15 @@ function initializeDeviceOptimization() {
 
   // Fix viewport height issues on mobile
   const fixViewportHeight = () => {
-    const vh = window.innerHeight * 0.01;
+    const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    const vh = viewportHeight * 0.01;
     document.documentElement.style.setProperty('--vh', vh + 'px');
     
     // Update section heights for better mobile support
     const sections = document.querySelectorAll('.section, #story, #timeline, #countdown');
     sections.forEach(section => {
-      section.style.minHeight = window.innerHeight + 'px';
+      section.style.height = viewportHeight + 'px';
+      section.style.minHeight = viewportHeight + 'px';
     });
   };
 
