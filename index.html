@@ -56,9 +56,12 @@ input, select, textarea {
 }
 
 .section{ 
-  height: calc(var(--vh, 1vh) * 100);
-  min-height: calc(var(--vh, 1vh) * 100);
-  max-height: calc(var(--vh, 1vh) * 100);
+  height: 100vh; 
+  height: 100dvh; 
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
   overflow: hidden;
   position: relative;
 }
@@ -69,7 +72,8 @@ input, select, textarea {
   top: 0;
   left: 0;
   width:100%;
-  height: calc(var(--vh, 1vh) * 100);
+  height:100vh;
+  height:100dvh;
   overflow:hidden;
   z-index:1;
 }
@@ -213,7 +217,8 @@ input, select, textarea {
   top: 0;
   left: 0;
   width:100%;
-  height: calc(var(--vh, 1vh) * 100);
+  height:100vh;
+  height:100dvh;
   display:flex;
   perspective:1800px;
   z-index:2;
@@ -236,7 +241,7 @@ input, select, textarea {
 
 .side{
   width:50%;
-  height: calc(var(--vh, 1vh) * 100);
+  height:100vh;
   background: linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 45%);
   border-left:1px solid rgba(255,255,255,0.08);
   border-right:1px solid rgba(255,255,255,0.08);
@@ -301,7 +306,8 @@ input, select, textarea {
 
 /* 💖 STORY (ENHANCED) */
 #story{
-  min-height: calc(var(--vh, 1vh) * 100);
+  min-height:100vh;
+  min-height:100dvh;
   background:linear-gradient(to bottom,#ffb6c1,#ff69b4,#ff1493);
   color:white;
   display:flex;
@@ -798,7 +804,8 @@ input, select, textarea {
 
 /* 🕌 TIMELINE */
 #timeline{
-  min-height: calc(var(--vh, 1vh) * 100);
+  min-height:100vh;
+  min-height:100dvh;
   padding: clamp(40px, 8vh, 80px) 20px;
   background:linear-gradient(180deg,#150b1b,#120810 60%,#0f0813);
   color:white;
@@ -1215,7 +1222,8 @@ input, select, textarea {
 
 /* ⏰ COUNTDOWN */
 #countdown{
-  min-height: calc(var(--vh, 1vh) * 100);
+  min-height:100vh;
+  min-height:100dvh;
   padding: clamp(40px, 8vh, 80px) 20px;
   background:linear-gradient(180deg,#0f0813,#120810 40%,#150b1b);
   color:white;
@@ -1413,7 +1421,7 @@ input, select, textarea {
 /* TABLET RESPONSIVE */
 @media (min-width: 768px) and (max-width: 1024px) {
   .section {
-    height: calc(var(--vh, 1vh) * 100);
+    height: 100vh;
   }
 }
 
@@ -1822,15 +1830,13 @@ function initializeDeviceOptimization() {
 
   // Fix viewport height issues on mobile
   const fixViewportHeight = () => {
-    const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-    const vh = viewportHeight * 0.01;
+    const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', vh + 'px');
     
     // Update section heights for better mobile support
     const sections = document.querySelectorAll('.section, #story, #timeline, #countdown');
     sections.forEach(section => {
-      section.style.height = viewportHeight + 'px';
-      section.style.minHeight = viewportHeight + 'px';
+      section.style.minHeight = window.innerHeight + 'px';
     });
   };
 
@@ -1868,11 +1874,6 @@ function initializeDeviceOptimization() {
         this.style.fontSize = '16px';
       });
     });
-  }
-
-  // Disable browser scroll restoration so reload starts at the top
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
   }
 
   // Log device info for debugging (optional)
@@ -2004,22 +2005,10 @@ function resetPageState() {
   // Reset couple name
   const coupleName = document.getElementById("coupleName");
   if (coupleName) coupleName.classList.remove("showNames");
-
-  // Remove any floating symbols leftover from a cached load
-  const loveSymbolContainer = document.getElementById('loveSymbols');
-  if (loveSymbolContainer) loveSymbolContainer.innerHTML = '';
-
-  // Clear any spawned particles, sparkles, or petals
-  document.querySelectorAll('.doorSparkle, .particle').forEach(el => el.remove());
-  const petalContainer = document.getElementById('petalContainer');
-  if (petalContainer) petalContainer.innerHTML = '';
-
+  
   // Reset story paragraphs
   const storyParagraphs = document.querySelectorAll('.storyBox p');
   storyParagraphs.forEach(p => p.classList.remove('typing-active'));
-
-  const scrollHint = document.getElementById('scrollHint');
-  if (scrollHint) scrollHint.classList.remove('show');
 }
 
 // Initialize on page load
@@ -2036,17 +2025,6 @@ if (document.readyState === 'loading') {
   //createFloatingSymbols();
   initializeStoryTyping();
 }
-
-window.addEventListener('pageshow', (event) => {
-  if (event.persisted) {
-    resetPageState();
-    window.scrollTo(0, 0);
-  }
-});
-
-window.addEventListener('beforeunload', () => {
-  window.scrollTo(0, 0);
-});
 
 /* ✅ SAME JS - UNCHANGED */
 const btn=document.getElementById("btn");
