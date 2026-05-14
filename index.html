@@ -1876,6 +1876,11 @@ function initializeDeviceOptimization() {
     });
   }
 
+  // Keep reload/start behavior consistent on mobile
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
   // Log device info for debugging (optional)
   console.log({
     isMobile,
@@ -2005,6 +2010,10 @@ function resetPageState() {
   // Reset couple name
   const coupleName = document.getElementById("coupleName");
   if (coupleName) coupleName.classList.remove("showNames");
+
+  // Reset scroll hint state
+  const scrollHint = document.getElementById('scrollHint');
+  if (scrollHint) scrollHint.classList.remove('show');
   
   // Reset story paragraphs
   const storyParagraphs = document.querySelectorAll('.storyBox p');
@@ -2025,6 +2034,17 @@ if (document.readyState === 'loading') {
   //createFloatingSymbols();
   initializeStoryTyping();
 }
+
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    resetPageState();
+    window.scrollTo(0, 0);
+  }
+});
+
+window.addEventListener('beforeunload', () => {
+  window.scrollTo(0, 0);
+});
 
 /* ✅ SAME JS - UNCHANGED */
 const btn=document.getElementById("btn");
